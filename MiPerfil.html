@@ -2,116 +2,617 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Estructura Semántica en HTML5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil Profesional | Anderson Espinosa</title>
+  
+  <!-- Fuentes e Iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
+    :root {
+      --primary-color: #0d2b45;
+      --primary-light: #1a4369;
+      --secondary-color: #f0f4f8; 
+      --accent-color: #c87a55;
+      --text-main: #2b3945;
+      --text-muted: #64748b;
+      --white: #ffffff;
+      --card-shadow: 0 10px 30px rgba(13, 43, 69, 0.04);
+      --card-hover-shadow: 0 20px 40px rgba(13, 43, 69, 0.08);
+      --border-radius: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: Arial, sans-serif;
-    }
-    header, nav, main, article, section, aside, footer {
-      border: 2px solid #b30000;
-      margin: 10px;
-      padding: 10px;
-    }
-
-    header, footer {
-      background-color: #f9c6b0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    nav {
-      background-color: #d8f7aa;
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--secondary-color); }
+    ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      background: linear-gradient(-45deg, #0d2b45, #1a4369, #0f3d5c, #0a1f33);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: var(--white);
+      padding: 70px 20px 140px; 
+      text-align: center;
+      position: relative;
+      clip-path: ellipse(150% 100% at 50% 0%); 
+    }
+
+    /* ================= FOTO DE PERFIL (MEJORADA) =================
+       Ya no se recorta: la imagen se muestra completa con sus
+       proporciones originales, con esquinas redondeadas.
+    ============================================================= */
+    .profile-photo-container {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .profile-photo {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: min(170px, 60vw);
+      max-height: 210px;
+      object-fit: contain;
+      border-radius: 22px;
+      border: 5px solid var(--white);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+      background-color: var(--white);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .profile-photo:hover { 
+      transform: scale(1.05) rotate(2deg); 
+      border-color: var(--accent-color);
+    }
+
+    header h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 5px;
+      text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+    }
+
+    header h2 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #b8d4f2;
+      text-transform: uppercase;
+      letter-spacing: 3px;
     }
 
     main {
-      background-color: #fcd9c2;
+      display: grid;
+      grid-template-columns: 2.3fr 1.2fr;
+      max-width: 1200px;
+      margin: -80px auto 50px; 
+      gap: 35px;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+      padding: 45px;
+      margin-bottom: 35px;
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: all 0.4s ease;
+      opacity: 0;
+      animation: fadeUp 0.8s forwards ease-out;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .main-column .card:nth-child(1) { animation-delay: 0.1s; }
+    .main-column .card:nth-child(2) { animation-delay: 0.2s; }
+    .main-column .card:nth-child(3) { animation-delay: 0.3s; }
+    .main-column .card:nth-child(4) { animation-delay: 0.4s; }
+    .sidebar .card:nth-child(1) { animation-delay: 0.5s; }
+    .sidebar .card:nth-child(2) { animation-delay: 0.6s; }
+    .sidebar .card:nth-child(3) { animation-delay: 0.7s; }
+    .sidebar .card:nth-child(4) { animation-delay: 0.8s; }
+
+    h3.section-title {
+      color: var(--primary-color);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
       display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
-    article {
-      background-color: #e0e0e0;
-      flex: 3;
-      margin-right: 10px;
+    h3.section-title i { 
+      color: var(--accent-color); 
+      font-size: 1.3rem;
+      background: rgba(200, 122, 85, 0.1);
       padding: 10px;
+      border-radius: 10px;
     }
 
-    section {
-      background-color: #c4f3ff;
-      border: 2px solid #0077b6;
-      margin: 5px 0;
-      padding: 10px;
+    .exp-item {
+      margin-bottom: 30px;
+      border-left: 3px solid var(--accent-color);
+      padding-left: 25px;
+      position: relative;
+      transition: all 0.3s ease;
     }
 
-    aside {
-      background-color: #d3d3d3;
-      flex: 1;
-      padding: 10px;
+    .exp-item:hover { border-left-color: var(--primary-color); }
+
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 5px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background-color: var(--white);
+      border: 4px solid var(--accent-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 0 4px rgba(255,255,255,1);
+    }
+
+    .exp-item:hover::before {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      transform: scale(1.2);
+    }
+
+    .exp-title {
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .exp-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #1e293b;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-link:hover {
+      background-color: #0f172a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(15, 23, 42, 0.2);
+      color: var(--white);
+    }
+
+    .project-link i { font-size: 1.1rem; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .skill-box {
+      background-color: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-box::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background-color: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .skill-box:hover {
+      border-color: transparent;
+      box-shadow: 0 12px 25px rgba(13, 43, 69, 0.08);
+      transform: translateY(-5px);
+    }
+
+    .skill-box:hover::after {
+      transform: scaleX(1);
+    }
+
+    .skill-box-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .skill-box-header i { font-size: 1.5rem; color: var(--accent-color); }
+    .skill-box-header h4 { color: var(--primary-color); font-size: 1.15rem; font-weight: 600; }
+
+    .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #f8fafc;
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .tag i { color: var(--primary-color); font-size: 1rem; }
+    
+    .tag:hover { 
+      background-color: var(--primary-color); 
+      color: var(--white); 
+      border-color: var(--primary-color); 
+      transform: translateY(-2px);
+    }
+    .tag:hover i { color: var(--white); }
+
+    .about-text { 
+      color: var(--text-muted); 
+      text-align: justify; 
+      font-size: 1rem; 
+      line-height: 1.9; 
+    }
+    
+    .about-text p {
+      margin-bottom: 15px;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .info-list { display: flex; flex-direction: column; gap: 20px; }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .info-item:hover { background-color: #f8fafc; }
+    
+    .info-item i { 
+      color: var(--accent-color); 
+      font-size: 1.3rem; 
+      width: 40px;
+      height: 40px;
+      background: rgba(200, 122, 85, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .info-item div p:first-child { font-weight: 600; color: var(--primary-color); font-size: 0.95rem; }
+    .info-item div p:last-child { color: var(--text-muted); font-size: 0.9rem; }
+
+    .action-buttons { display: flex; flex-direction: column; gap: 15px; }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .btn-github { background-color: #24292e; color: white; }
+    .btn-github:hover { background-color: #1b1f23; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    
+    .btn-linkedin { background-color: #0a66c2; color: white; }
+    .btn-linkedin:hover { background-color: #004182; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(10, 102, 194, 0.25); }
+
+    footer { 
+      text-align: center; 
+      padding: 50px 20px; 
+      color: var(--text-muted); 
+      font-size: 0.95rem; 
+    }
+
+    @media (max-width: 950px) {
+      main { grid-template-columns: 1fr; margin-top: -50px; }
+      header { padding-bottom: 100px; clip-path: ellipse(200% 100% at 50% 0%); }
+      header h1 { font-size: 2.5rem; }
+      .profile-photo { max-width: min(140px, 50vw); max-height: 180px; }
+    }
+
+    @media print {
+      body { background-color: var(--white); overflow: auto; }
+      header { background: var(--white); color: var(--text-main); padding: 20px 0; animation: none; clip-path: none; margin-bottom: 20px;}
+      header h1 { color: var(--primary-color); text-shadow: none; }
+      header h2 { color: var(--text-muted); }
+      .profile-photo { border-color: var(--primary-color); box-shadow: none; max-width: 150px; max-height: 190px; }
+      main { margin: 0; padding: 0; grid-template-columns: 1fr; display: block; }
+      .card { box-shadow: none; border: 1px solid #e2e8f0; margin-bottom: 20px; padding: 25px; page-break-inside: avoid; animation: none; transform: none !important; }
+      .skill-box { border: 1px solid #e2e8f0; background: transparent; padding: 15px; }
+      .skill-box::after { display: none; }
+      .tag { border: 1px solid #e2e8f0; color: #333; background: transparent; }
+      .btn { box-shadow: none; transform: none; border: 1px solid #e2e8f0; color: #333; background: transparent;}
+      .btn i, .project-link i { display: none; }
+      .project-link { box-shadow: none; transform: none; border: 1px solid #e2e8f0; color: #333; background: transparent; }
+      footer { display: none; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Mi Perfil</h1>
-    <nav>
-      <h2>Anderson Antanas Espinosa Feijoo</h2>
-    </nav>
+    <div class="profile-photo-container">
+      <img src="CUV.png" alt="Foto de perfil de Anderson Espinosa" class="profile-photo">
+    </div>
+    <h1>Anderson Espinosa</h1>
+    <h2>Desarrollador de Software</h2>
   </header>
 
   <main>
-    <article>
-      <h2>Información Principal</h2>
-      <section>
-        <h3>Datos Personales</h3>
-           <ul>
-              <li><strong>Dirección:</strong> El Oro</li>
-              <li><strong>Teléfono:</strong> 0991039579</li>
-              <li><strong>Correo:</strong> anderespi@outlook.es</li>
-          </ul>
-
-      </section>
-      <section>
-        <h3>Formación Academica</h3>
-           <ul>
-              <li><strong>Secundaria:</strong>BGU Ciudad De Portovelo - Bachiller en Ciencias.</li>
-              <li><strong>Universidad:</strong>Universidad Estatal de Guayaquil - Ingeniería en Software (Cursando).</li>
-          </ul>
-        </p>
-      </section>
-      <section>
-        <h3>Habilidades Tecnicas</h3>
-         <ul>
-              <li><strong>Lenguaje de Programación: </strong>Java (50%) - C# (55%) - C++ (60%) .</li>
-              <li><strong>Diseño y Prototipado: </strong>Figma (80%) .</li>
-              <li><strong>Base de Datos: </strong>MySQL (80%) .</li>
-          </ul>
-          <h4><strong>Idiomas</strong></h4>
-          <ul>
-              <li><strong>Español:</strong> Nativo.</li>
-              <li><strong>Inglés:</strong> Intermedio (A2).</li>
-
-      </section>
+    <!-- ========================================== -->
+    <!-- COLUMNA PRINCIPAL (LADO IZQUIERDO)         -->
+    <!-- ========================================== -->
+    <div class="main-column">
       
-    </article>
+      <!-- 1. Sobre Mí -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-user"></i> Sobre Mí</h3>
+        <div class="about-text">
+          <p>Soy estudiante de Ingeniería en Software, con un gran interés por la tecnología, el desarrollo de aplicaciones y el diseño de experiencias digitales. Disfruto transformar ideas complejas en soluciones digitales eficientes, trabajando tanto en la lógica del backend como en el diseño de experiencias de usuario (UI/UX) atractivas desde el frontend.</p>
+          <p>Me considero una persona organizada, proactiva y enfocada en los detalles. Valoro profundamente el trabajo en equipo, ya que creo que las mejores soluciones nacen de la colaboración. Siempre estoy en constante aprendizaje, buscando dominar nuevas herramientas y enfrentar retos que me permitan seguir creciendo profesionalmente.</p>
+        </div>
+      </article>
 
-    <aside>
-    <h2>Sobre Mí</h2>
-    <p style="text-align: justify;">
-    Soy una persona responsable, proactiva y comprometida con mis objetivos, con especial interés en el área tecnológica.
-    Me gusta aprender constantemente sobre nuevas herramientas, lenguajes de programación y tendencias digitales, así como 
-    aplicarlas en proyectos reales. Disfruto trabajar en equipo, aportar ideas innovadoras y resolver problemas de manera eficiente.
-    Me considero alguien organizado, con buena actitud y enfoque en resultados, siempre buscando optimizar procesos y crecer profesionalmente
-    en el ámbito tecnológico.
-    </p>
-      <h3>Enlaces</h3>
-      <a href="https://github.com/Anderaef">Mi GitHub</a>
-      <br>
-      <a href="https://www.linkedin.com/in/anderson-espinosa-459026359?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app ">Mi Linked In</a>
+      <!-- 2. Experiencia -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-briefcase"></i> Experiencia</h3>
+        
+        <div class="exp-item">
+          <div class="exp-title">Diseño UX/UI y Prototipado</div>
+          <div class="exp-desc">
+            Diseño de Interfaces en Figma.<br>
+            Trabajo colaborativo en Proyectos de Software.
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-title">Gestión de Bases de Datos</div>
+          <div class="exp-desc">
+            Modelado relacional (PostgreSQL/SQL Server).<br>
+            Consultas avanzadas con JOIN estándar.
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-title">Desarrollo Full-Stack</div>
+          <div class="exp-desc">
+            Desarrollo de interfaces en Next.js.<br>
+            Creación de APIs en Node.js y Python.
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-title">Entornos e Integración</div>
+          <div class="exp-desc">
+            Entornos de desarrollo con Docker.<br>
+            Control de versiones (Git/GitHub).
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Habilidades Técnicas -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-microchip"></i> Habilidades Técnicas</h3>
+        
+        <div class="skills-grid">
+          <div class="skill-box">
+            <div class="skill-box-header">
+              <i class="fa-brands fa-react"></i>
+              <h4>Frontend</h4>
+            </div>
+            <div class="tags-container">
+              <span class="tag"><i class="fa-brands fa-react"></i> React.js</span>
+              <span class="tag"><i class="fa-brands fa-js"></i> Next.js</span>
+              <span class="tag"><i class="fa-brands fa-html5"></i> HTML5</span>
+              <span class="tag"><i class="fa-brands fa-css3-alt"></i> CSS</span>
+              <span class="tag"><i class="fa-brands fa-square-js"></i> JavaScript</span>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <div class="skill-box-header">
+              <i class="fa-brands fa-node-js"></i>
+              <h4>Backend</h4>
+            </div>
+            <div class="tags-container">
+              <span class="tag"><i class="fa-brands fa-node"></i> Node.js</span>
+              <span class="tag"><i class="fa-solid fa-server"></i> Express.js</span>
+              <span class="tag"><i class="fa-brands fa-java"></i> Java</span>
+              <span class="tag"><i class="fa-brands fa-python"></i> Python</span>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <div class="skill-box-header">
+              <i class="fa-solid fa-database"></i>
+              <h4>Base de Datos</h4>
+            </div>
+            <div class="tags-container">
+              <span class="tag"><i class="fa-solid fa-server"></i> PostgreSQL</span>
+              <span class="tag"><i class="fa-solid fa-database"></i> SQL Server</span>
+              <span class="tag"><i class="fa-solid fa-database"></i> MySQL</span>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <div class="skill-box-header">
+              <i class="fa-solid fa-toolbox"></i>
+              <h4>Herramientas</h4>
+            </div>
+            <div class="tags-container">
+              <span class="tag"><i class="fa-brands fa-github"></i> GitHub</span>
+              <span class="tag"><i class="fa-brands fa-docker"></i> Docker</span>
+              <span class="tag"><i class="fa-solid fa-wrench"></i> MySQL Workbench</span>
+              <span class="tag"><i class="fa-solid fa-code"></i> VS Code</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Proyectos -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-laptop-code"></i> Proyectos</h3>
+        
+        <div class="exp-item">
+          <div class="exp-title">VetClinic</div>
+          <div class="exp-desc">
+            Sistema de gestión veterinaria (Java Swing, MVC, PostgreSQL).<br>
+            <a href="https://github.com/Anderaef/Sistema-para-Veterinaria" class="project-link" target="_blank">
+              <i class="fa-brands fa-github"></i> Ver Repositorio &rarr;
+            </a>
+          </div>
+        </div>
+      </article>
+      
+    </div>
+
+    <!-- ========================================== -->
+    <!-- COLUMNA LATERAL (LADO DERECHO)             -->
+    <!-- ========================================== -->
+    <aside class="sidebar">
+
+      <!-- 1. Educación (Ahora arriba para equilibrar) -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Educación</h3>
+        
+        <div class="exp-item">
+          <div class="exp-title">Ingeniero en Software</div>
+          <div class="exp-desc">Universidad de Guayaquil | 2023- En curso</div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-title">Inglés - Nivel Intermedio</div>
+          <div class="exp-desc">Copei Language Institute by ESPOL | En curso</div>
+        </div>
+      </article>
+
+      <!-- 2. Contacto -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-address-card"></i> Contacto</h3>
+        <div class="info-list">
+          <div class="info-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <p>Ubicación</p>
+              <p>Guayaquil - Ecuador</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <p>Teléfono</p>
+              <p>(593) 991039579</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <p>Correo</p>
+              <p>anderespi@outlook.es</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Enlaces Profesionales (Más centrados y accesibles) -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-link"></i> Enlaces</h3>
+        <div class="action-buttons">
+          <a href="https://github.com/Anderaef" target="_blank" class="btn btn-github">
+            <i class="fa-brands fa-github"></i> Mi GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/anderson-espinosa-459026359/" target="_blank" class="btn btn-linkedin">
+            <i class="fa-brands fa-linkedin"></i> Mi LinkedIn
+          </a>
+        </div>
+      </article>
+
+      <!-- 4. Referencias -->
+      <article class="card">
+        <h3 class="section-title"><i class="fa-solid fa-users"></i> Referencias</h3>
+        <div class="info-list">
+          <div class="info-item">
+            <i class="fa-solid fa-circle-user"></i>
+            <div>
+              <p>Ing. Necker Espinosa</p>
+              <p>Ingeniero de Desarrollo Siigo Contifico<br>(593) 979142326</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </aside>
   </main>
 
   <footer>
-    <nav>
-      <p>© 2025 AnGames. Todos los derechos reservados. Prohibida su reproducción total o parcial sin autorización previa.</p>
-    </nav>
+    <p>© 2026 AnGames. Todos los derechos reservados.</p>
   </footer>
 
 </body>
